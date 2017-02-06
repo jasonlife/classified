@@ -1,0 +1,86 @@
+{% extends "postman/base.html" %}
+{% load i18n postman_tags %}{% load pagination_tags %}{% comment %}
+WARNING: 'pagination_tags' is a name from the django-pagination application.
+For convenience, the design of this template is done with the use of that application.
+Django-postman will still be working, even if that application is not installed, by providing a mock
+for the template tag library.
+If the real implementation is to be used, just make sure that 'pagination' is declared before 'postman'
+in the INSTALLED_APPS setting.
+{% endcomment %}
+{% block content %}
+{% block postman_menu %}
+<ul id="postman_menu">{% postman_unread as unread_count %}<p1>
+ <li><a href="{% url 'postman:inbox' %}">&raquo;&nbsp;<p1>{% trans "Inbox" %}{% if unread_count %} <strong>({{ unread_count }})</strong>{% endif %}</a></p1></li>
+ <li><a href="{% url 'postman:sent' %}">&raquo;&nbsp;<p1>{% trans "Sent Messages" %}</p1></a></li>
+ <li><a href="{% url 'postman:write' %}">&raquo;&nbsp;<p1>{% trans "Compose" %}</p1></a></li>
+ <!--<li><a href="{% url 'select' %}">&raquo;&nbsp;<p1>{% trans "Compose" %}</p1></a></li> -->
+ <li><a href="{% url 'postman:archives' %}">&raquo;&nbsp;<p1>{% trans "Archives" %}</p1></a></li>
+ <li><a href="{% url 'postman:trash' %}">&raquo;&nbsp;<p1>{% trans "Trash" %}</p1></a></li></p1>
+</ul>
+{% endblock %}
+<div id="postman">
+<center><h1 class='lead'>{% block pm_folder_title %}{% endblock %}</h1></center>
+{% autopaginate pm_messages %}
+{% if invalid_page %}
+<p>{% trans "Sorry, this page number is invalid." %}</p>
+{% else %}
+{% if pm_messages %}
+<form action="{% block pm_form_action %}{% endblock %}" method="post">{% csrf_token %}
+{% block pm_form_buttons %}<span id="pm_buttons">
+{% block pm_delete_button %}<button type="submit" id="button-red" onclick="this.form.action='{% url 'postman:delete' %}'">{% trans "Delete" %}</button>{% endblock %}
+{% block pm_archive_button %}<button type="submit" id="button-yellow" onclick="this.form.action='{% url 'postman:archive' %}'">{% trans "Archive" %}</button>{% endblock %}
+{% block pm_undelete_button %}<button type="submit" id="button-blue" onclick="this.form.action='{% url 'postman:undelete' %}'">{% trans "Undelete" %}</button>{% endblock %}
+</span>{% endblock %}
+<table id="pm_messages">
+ <thead>
+  <tr>
+  </tr>
+ </thead>
+ <tbody>
+   <div class="container">
+<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
+ <div class="mail-box">
+                          <table class="table table-inbox table-hover">
+                            <tbody>
+                            <tr class="">
+                            <td class="inbox-small-cells">{% trans "Sort By:" %}</td>
+                            <td class="inbox-small-cells">{% block pm_sender_header %}   <th><a href="{% postman_order_by sender %}">{% trans "Sender" %}</a></th>{% endblock %}</td>
+</td>
+                                  <td class="view-message dont-show">
+                                  </td>
+                                 
+                                  <td class="view-message text-right"><td><th><a href="{% postman_order_by date %}">{% block pm_date %}{% trans "Date" %}{% endblock %}</a></th></td>
+                            </tr>
+                            {% for message in pm_messages %}
+                              <tr class="unread">
+                                  <td class="inbox-small-cells">
+                                      <input type="checkbox" class='mail-checkbox' {% if by_conversation and message.thread_id %}name="tpks" value="{{ message.thread_id }}"{% else %}name="pks" value="{{ message.pk }}"{% endif %} />
+                                  </td>
+                                  <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
+                                  {% block pm_sender_cell %}   <td class="view-message dont-show">{% if message.is_new %}<strong>{% endif %}{% if message.is_replied %}<em>{% endif %}{{ message.obfuscated_sender|or_me:user }}{% if message.count %} ({{ message.count }}){% endif %}</td>{% endblock %}
+                                  <td class="view-message">{% block pm_subject %}
+                                  {% if message.is_new %}<strong>{% endif %}{% if message.is_replied %}<em>{% endif %}
+    							<a href="{% if by_conversation and message.thread_id %}{% url 'postman:view_conversation' message.thread_id %}{% else %}{% url 'postman:view' message.pk %}{% endif %}?next={{ current_url|urlencode }}">
+    							{% include "postman/inc_subject_ex.html" %}
+    </a>
+{% endblock %} </td>
+                                  <td class="view-message inbox-small-cells"></td>
+                                  <td class="view-message text-right"><td>{% if message.is_replied %}</em>{% endif %}{% if message.is_new %}</strong>{% endif %}{{ message.sent_at|compact_date:_("g:i A,M j,n/j/y") }}</td></td> {% endfor %}
+                              </tr>
+                          </tbody>
+                          </table>
+                      </div>
+                  </aside>
+              </div>
+  <tr>
+
+  </tr>
+</form>
+{% paginate %}
+{% else %}
+<p>{% trans "No messages." %}</p>
+{% endif %}
+{% endif %}
+{% block pm_footer_info %}{% endblock %}
+</div>
+{% endblock content %}

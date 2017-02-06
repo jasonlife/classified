@@ -1,0 +1,587 @@
+{% load i18n %}
+{% block extra_head %}
+{% load avatar_tags %}
+<link rel="stylesheet" href="{{STATIC_URL}}/css/site-c179c6a5f4.css">
+{% endblock %}
+{% block head %}
+<head>
+<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+<link href="design.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('.toggler').click(function() {
+                $(this).find('div').slideToggle();
+            });
+        });
+    </script>
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
+  google.load("jquery", "1.4");
+</script>
+<script>
+var activeEl = 2;
+$(function() {
+    var items = $('.btn-nav');
+    $( items[activeEl] ).addClass('active');
+    $( ".btn-nav" ).click(function() {
+        $( items[activeEl] ).removeClass('active');
+        $( this ).addClass('active');
+        activeEl = $( ".btn-nav" ).index( this );
+    });
+});
+</script>
+<script>
+$(document).ready(function() {
+$('#pinBoot').pinterest_grid({
+no_columns: 4,
+padding_x: 10,
+padding_y: 10,
+margin_bottom: 50,
+single_column_breakpoint: 700
+});
+});
+
+
+;(function ($, window, document, undefined) {
+    var pluginName = 'pinterest_grid',
+        defaults = {
+            padding_x: 10,
+            padding_y: 10,
+            no_columns: 3,
+            margin_bottom: 50,
+            single_column_breakpoint: 700
+        },
+        columns,
+        $article,
+        article_width;
+
+    function Plugin(element, options) {
+        this.element = element;
+        this.options = $.extend({}, defaults, options) ;
+        this._defaults = defaults;
+        this._name = pluginName;
+        this.init();
+    }
+
+    Plugin.prototype.init = function () {
+        var self = this,
+            resize_finish;
+
+        $(window).resize(function() {
+            clearTimeout(resize_finish);
+            resize_finish = setTimeout( function () {
+                self.make_layout_change(self);
+            }, 11);
+        });
+
+        self.make_layout_change(self);
+
+        setTimeout(function() {
+            $(window).resize();
+        }, 500);
+    };
+
+    Plugin.prototype.calculate = function (single_column_mode) {
+        var self = this,
+            tallest = 0,
+            row = 0,
+            $container = $(this.element),
+            container_width = $container.width();
+            $article = $(this.element).children();
+
+        if(single_column_mode === true) {
+            article_width = $container.width() - self.options.padding_x;
+        } else {
+            article_width = ($container.width() - self.options.padding_x * self.options.no_columns) / self.options.no_columns;
+        }
+
+        $article.each(function() {
+            $(this).css('width', article_width);
+        });
+
+        columns = self.options.no_columns;
+
+        $article.each(function(index) {
+            var current_column,
+                left_out = 0,
+                top = 0,
+                $this = $(this),
+                prevAll = $this.prevAll(),
+                tallest = 0;
+
+            if(single_column_mode === false) {
+                current_column = (index % columns);
+            } else {
+                current_column = 0;
+            }
+
+            for(var t = 0; t < columns; t++) {
+                $this.removeClass('c'+t);
+            }
+
+            if(index % columns === 0) {
+                row++;
+            }
+
+            $this.addClass('c' + current_column);
+            $this.addClass('r' + row);
+
+            prevAll.each(function(index) {
+                if($(this).hasClass('c' + current_column)) {
+                    top += $(this).outerHeight() + self.options.padding_y;
+                }
+            });
+
+            if(single_column_mode === true) {
+                left_out = 0;
+            } else {
+                left_out = (index % columns) * (article_width + self.options.padding_x);
+            }
+
+            $this.css({
+                'left': left_out,
+                'top' : top
+            });
+        });
+
+        this.tallest($container);
+        $(window).resize();
+    };
+
+    Plugin.prototype.tallest = function (_container) {
+        var column_heights = [],
+            largest = 0;
+
+        for(var z = 0; z < columns; z++) {
+            var temp_height = 0;
+            _container.find('.c'+z).each(function() {
+                temp_height += $(this).outerHeight();
+            });
+            column_heights[z] = temp_height;
+        }
+
+        largest = Math.max.apply(Math, column_heights);
+        _container.css('height', largest + (this.options.padding_y + this.options.margin_bottom));
+    };
+
+    Plugin.prototype.make_layout_change = function (_self) {
+        if($(window).width() < _self.options.single_column_breakpoint) {
+            _self.calculate(true);
+        } else {
+            _self.calculate(false);
+        }
+    };
+
+    $.fn[pluginName] = function (options) {
+        return this.each(function () {
+            if (!$.data(this, 'plugin_' + pluginName)) {
+                $.data(this, 'plugin_' + pluginName,
+                new Plugin(this, options));
+            }
+        });
+    }
+
+})(jQuery, window, document);
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+	body,html{
+    height: 100%;
+  }
+  #pinBoot {
+  position: relative;
+  max-width: 100%;
+  width: 100%;
+}
+
+img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+body {
+	    background-image: url(http://i.imgur.com/HvrtqEW.jpg);
+		background-repeat: no-repeat;
+    	background-attachment: fixed;
+    	background-size: 100% auto;
+	}
+.white-panel {
+  position: absolute;
+  background: white;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  
+}
+/*
+stylize any heading tags withing white-panel below
+*/
+
+.white-panel h1 {
+  font-size: 1em;
+}
+.white-panel h1 a {
+  color: #A92733;
+}
+.white-panel:hover {
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+  margin-top: -5px;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+  *, *:before, *:after {
+  /* Chrome 9-, Safari 5-, iOS 4.2-, Android 3-, Blackberry 7- */
+  -webkit-box-sizing: border-box; 
+
+  /* Firefox (desktop or Android) 28- */
+  -moz-box-sizing: border-box;
+
+  /* Firefox 29+, IE 8+, Chrome 10+, Safari 5.1+, Opera 9.5+, iOS 5+, Opera Mini Anything, Blackberry 10+, Android 4+ */
+  box-sizing: border-box;
+}
+body {
+    text-align: center;
+    padding-top: 40px;
+}
+.btn-nav {
+    background-color: #fff;
+    border: 1px solid #e0e1db;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+}
+.btn-nav:hover {
+    color: #e92d00;
+    cursor: pointer;
+    -webkit-transition: color 1s; /* For Safari 3.1 to 6.0 */
+    transition: color 1s;
+}
+.btn-nav.active {
+    color: #e92d00;
+    padding: 2px;
+	border-top: 6px solid #e92d00;
+	border-bottom: 6px solid #e92d00;
+    border-left: 0;
+    border-right: 0;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    -webkit-transition: border 0.3s ease-out, color 0.3s ease 0.5s;
+    -moz-transition: border 0.3s ease-out, color 0.3s ease 0.5s;
+    -ms-transition: border 0.3s ease-out, color 0.3s ease 0.5s; /* IE10 is actually unprefixed */
+    -o-transition: border 0.3s ease-out, color 0.3s ease 0.5s;
+    transition: border 0.3s ease-out, color 0.3s ease 0.5s;
+    -webkit-animation: pulsate 1.2s linear infinite;
+    animation: pulsate 1.2s linear infinite;
+}
+.btn-nav.active:before {
+	content: '';
+	position: absolute;
+	border-style: solid;
+	border-width: 6px 6px 0;
+	border-color: #e92d00 transparent;
+	display: block;
+	width: 0;
+	z-index: 1;
+	margin-left: -6px;
+	top: 0;
+	left: 50%;
+}
+.btn-nav .glyphicon {
+    padding-top: 16px;
+	font-size: 40px;
+}
+.btn-nav.active p {
+    margin-bottom: 8px;
+}
+@-webkit-keyframes pulsate {
+ 50% { color: #000; }
+}
+@keyframes pulsate {
+ 50% { color: #000; }
+}
+@media (max-width: 480px) {
+    .btn-group {
+        display: block !important;
+        float: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+}
+@media (max-width: 600px) {
+    .btn-nav .glyphicon {
+        padding-top: 12px;
+        font-size: 26px;
+    }
+}
+img.resize{
+   max-width:250%;
+   max-height:250%;
+}
+  nav.sidebar, .main{
+    -webkit-transition: margin 200ms ease-out;
+      -moz-transition: margin 200ms ease-out;
+      -o-transition: margin 200ms ease-out;
+      transition: margin 200ms ease-out;
+  }
+
+  .main{
+    padding: 10px 10px 0 10px;
+  }
+
+ @media (min-width: 765px) {
+
+    .main{
+      position: absolute;
+      width: calc(100% - 40px); 
+      margin-left: 40px;
+      float: right;
+    }
+
+    nav.sidebar:hover + .main{
+      margin-left: 200px;
+    }
+
+    nav.sidebar.navbar.sidebar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
+      margin-left: 0px;
+    }
+
+    nav.sidebar .navbar-brand, nav.sidebar .navbar-header{
+      text-align: center;
+      width: 100%;
+      margin-left: 0px;
+    }
+    
+    nav.sidebar a{
+      padding-right: 13px;
+    }
+
+    nav.sidebar .navbar-nav > li:first-child{
+      border-top: 1px #e5e5e5 solid;
+    }
+
+    nav.sidebar .navbar-nav > li{
+      border-bottom: 1px #e5e5e5 solid;
+    }
+
+    nav.sidebar .navbar-nav .open .dropdown-menu {
+      position: static;
+      float: none;
+      width: auto;
+      margin-top: 0;
+      background-color: transparent;
+      border: 0;
+      -webkit-box-shadow: none;
+      box-shadow: none;
+    }
+
+    nav.sidebar .navbar-collapse, nav.sidebar .container-fluid{
+      padding: 0 0px 0 0px;
+    }
+
+    .navbar-inverse .navbar-nav .open .dropdown-menu>li>a {
+      color: #777;
+    }
+
+    nav.sidebar{
+      width: 200px;
+      height: 100%;
+      margin-left: -160px;
+      float: left;
+      margin-bottom: 0px;
+    }
+
+    nav.sidebar li {
+      width: 100%;
+    }
+
+    nav.sidebar:hover{
+      margin-left: 0px;
+    }
+
+    .forAnimate{
+      opacity: 0;
+    }
+  }
+
+   
+  @media (min-width: 1330px) {
+
+    .main{
+      width: calc(100% - 200px);
+      margin-left: 200px;
+    }
+
+    nav.sidebar{
+      margin-left: 0px;
+      float: left;
+    }
+
+    nav.sidebar .forAnimate{
+      opacity: 1;
+    }
+  }
+
+  nav.sidebar .navbar-nav .open .dropdown-menu>li>a:hover, nav.sidebar .navbar-nav .open .dropdown-menu>li>a:focus {
+    color: #CCC;
+    background-color: transparent;
+  }
+
+  nav:hover .forAnimate{
+    opacity: 1;
+  }
+  section{
+    padding-left: 15px;
+  }
+
+	h1 {
+	font-family: 'Indie Flower', cursive;
+ 	   margin-left: 40px;
+ 	   font-size: 500%;
+	} 
+	@media (min-width: 768px) {
+    .omb_row-sm-offset-3 div:first-child[class*="col-"] {
+        margin-left: 25%;
+    }
+}
+
+.omb_login .omb_authTitle {
+    text-align: center;
+	line-height: 300%;
+}
+	
+.omb_login .omb_socialButtons a {
+	color: white; // In yourUse @body-bg 
+	opacity:0.9;
+}
+.omb_login .omb_socialButtons a:hover {
+    color: white;
+	opacity:1;    	
+}
+.omb_login .omb_socialButtons .omb_btn-facebook {background: #3b5998;}
+.omb_login .omb_socialButtons .omb_btn-twitter {background: #00aced;}
+.omb_login .omb_socialButtons .omb_btn-google {background: #c32f10;}
+
+
+.omb_login .omb_loginOr {
+	position: relative;
+	font-size: 1.5em;
+	color: #aaa;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+}
+.omb_login .omb_loginOr .omb_hrOr {
+	background-color: #cdcdcd;
+	height: 1px;
+	margin-top: 0px !important;
+	margin-bottom: 0px !important;
+}
+.omb_login .omb_loginOr .omb_spanOr {
+	display: block;
+	position: absolute;
+	left: 50%;
+	top: -0.6em;
+	margin-left: -1.5em;
+	background-color: white;
+	width: 3em;
+	text-align: center;
+}			
+
+.omb_login .omb_loginForm .input-group.i {
+	width: 2em;
+}
+.omb_login .omb_loginForm  .help-block {
+    color: red;
+}
+
+	
+@media (min-width: 768px) {
+    .omb_login .omb_forgotPwd {
+        text-align: right;
+		margin-top:10px;
+ 	}		
+}
+	p1{
+	color:white;
+	font-size:17px;
+	line-height:1.428;
+	margin-bottom:10px;
+  background:
+    radial-gradient(
+      rgba(200,200,200,0.4),
+      rgba(10,10,10,0.0)
+    );
+    p2{
+	color:white;
+	font-size:17px;
+	line-height:1.428;
+	margin-bottom:10px;
+  background:
+    radial-gradient(
+      rgba(200,200,200,1),
+      rgba(10,10,10,0.0)
+    );
+}
+</style>
+</head>
+{% endblock %}
+<!--
+<nav class="navbar navbar-default sidebar" role="navigation">
+    <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>      
+    </div>
+    <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Search Users <span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span></a>
+          <ul class="dropdown-menu forAnimate" role="menu">
+            <li><a href="">Create</a></li>
+            <li><a href="#">Report</a></li>
+          </ul>
+        </li>          
+        <li ><a href="#">Libros<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-th-list"></span></a></li>        
+        <li ><a href="#">Tags<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-tags"></span></a></li>
+      </ul>
+    </div>
+  </div>
+</nav> -->
+<h1> Latest Bella </h1>
+<div class="container-fluid">
+  <div class="row">
+  <div class='pls'>
+    <hr>
+    <section id="pinBoot">
+    {% for thot in thots %}
+				{% url "post_detail" thot.pk as detail %} 
+
+      <article class="white-panel"><img src = "http://localhost:8000/site_media/media/{{ thot.image }}" alt = ""> 
+        <h4> <a href="{{detail}}"}><p class='lead'>{{ thot.content|slice:":255" }}...</p></a></h4>
+        <p> {{ thot.creation_date }} <p>
+        {% if not thot.anon %}
+			   	 <td> Posted by {{ thot.user }}</a></td> 
+			   	 {% else %}
+			   	 <td> Anonymous Post</a></td>
+			   	 {% endif %}
+        </article>
+        {% endfor %}
+      
+    </section>
+
+
+    <hr>
+
+
+  </div>
+</div>

@@ -1,0 +1,175 @@
+{% load staticfiles %}
+
+{% load i18n %}
+
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+      
+<!-- jplist core -->
+<script src="jplist-core.min.js"></script>	
+
+<!-- jplist bootstrap sort dropdown control -->			
+<script src="jplist.boot-sort-dropdown.min.js"></script>
+
+<script>
+$('document').ready(function(){
+
+   $('#demo').jplist({				
+      itemsBox: '.list' 
+      ,itemPath: '.list-item' 
+      ,panelPath: '.jplist-panel'	
+   });
+   
+});
+</script>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Responsive Off-canvas Sidebar Navigation Demo</title>
+<style>
+@import url(https://fonts.googleapis.com/css?family=roboto);
+
+</style>
+</head>
+
+<body>
+<div id="demo">
+   
+   <!-- panel -->
+   <div class="jplist-panel">						
+      
+      <!-- jplist bootstrap sort dropdown control -->
+      <div 
+         class="dropdown"
+         data-control-type="boot-sort-drop-down" 
+         data-control-name="bootstrap-sort-dropdown-demo" 
+         data-control-action="sort"
+         data-datetime-format="{month}/{day}/{year}"> <!-- {year}, {month}, {day}, {hour}, {min}, {sec} -->
+
+        <button 
+         class="btn btn-default dropdown-toggle" 
+         type="button" 
+         id="sort-by-dropdown-btn" 
+         data-toggle="dropdown" 
+         aria-expanded="true">					
+         <span data-type="selected-text">Sort by</span>
+         <span class="caret"></span>						
+        </button>
+        
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+        
+         <li role="presentation">
+            <a 
+               role="menuitem" 
+               tabindex="-1" 
+               href="#" 
+               data-path=".title" 
+               data-order="asc" 
+               data-type="text" 
+               data-default="true">Title A-Z</a>
+         </li>
+         
+         <li role="presentation">
+            <a 
+               role="menuitem" 
+               tabindex="-1" 
+               href="#" 
+               data-path=".title" 
+               data-order="desc" 
+               data-type="text">Title Z-A</a>
+         </li>
+         
+         <li role="presentation" class="divider"></li>
+         
+         <li role="presentation">
+            <a 
+               role="menuitem" 
+               tabindex="-1" 
+               href="#" 
+               data-path=".desc" 
+               data-order="asc" 
+               data-type="text">Description A-Z</a>
+         </li>
+         
+         <li role="presentation">
+            <a 
+               role="menuitem" 
+               tabindex="-1" 
+               href="#" 
+               data-path=".desc" 
+               data-order="desc" 
+               data-type="text">Description Z-A</a>
+         </li>
+         
+         <li role="presentation" class="divider"></li>
+         
+         <li role="presentation">
+            <a 
+               role="menuitem" 
+               tabindex="-1" 
+               href="#" 
+               data-path=".like" 
+               data-order="asc" 
+               data-type="number">Likes asc</a>
+         </li>
+         
+         <li role="presentation">
+            <a 
+               role="menuitem" 
+               tabindex="-1" 
+               href="#" 
+               data-path=".like" 
+               data-order="desc" 
+               data-type="number">Likes desc</a>
+         </li>	
+         
+         <li role="presentation" class="divider"></li>
+         
+         <li role="presentation">
+            <a 
+               role="menuitem" 
+               tabindex="-1" 
+               href="#" 
+               data-path=".date" 
+               data-order="asc" 
+               data-type="datetime">Date asc</a>
+         </li>
+         
+         <li role="presentation">
+            <a 
+               role="menuitem" 
+               tabindex="-1" 
+               href="#" 
+               data-path=".date" 
+               data-order="desc" 
+               data-type="datetime">Date desc</a>
+         </li>
+         
+        </ul>
+        
+      </div>	
+      
+   </div>				 
+   
+   <!-- HTML data -->   
+   <div class="list">
+      
+      <!-- item 1 -->
+      <div class="list-item">	
+         ...
+      </div>
+      
+      <!-- item 2 -->
+      <div class="list-item">	
+         ...
+      </div>
+      
+      ...
+      
+   </div>	
+               
+</div>
+</body>
+</html>

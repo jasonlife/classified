@@ -1,0 +1,28 @@
+{% extends "theme_bootstrap/base.html" %}
+{% block extra_head %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<link rel="stylesheet" href="{{STATIC_URL}}css/site-c179c6a5f4.css">
+{% endblock %}
+
+{% load staticfiles %}
+{% load pinax_webanalytics_tags %}
+{% load i18n %}
+
+
+{% block styles %}
+    {% include "_styles.html" %}
+{% endblock %}
+
+{% block footer %}
+    {% include "_footer.html" %}
+{% endblock %}
+
+
+{% block scripts %}
+    {% include "_scripts.html" %}
+{% endblock %}
+
+{% block extra_body_base %}
+    {% analytics %}
+    {% block extra_body %}{% endblock %}
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'site_base.html' %}
+{% load i18n %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{STATIC_URL}}/css/site-c179c6a5f4.css">
+{% endblock %}
+
+{% block head %}
+<section class='bgimg'>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+	body {
+	    background-image: url(https://pixabay.com/static/uploads/photo/2015/10/30/16/40/thought-1014406_960_720.jpg);
+		background-repeat: no-repeat;
+    	background-attachment: fixed;
+    	background-size: 100% auto;
+	}
+
+	h1 {
+	    color: maroon;
+ 	   margin-left: 40px;
+	} 
+	
+	p1{
+	color:white;
+	font-size:17px;
+	line-height:1.428;
+	margin-bottom:10px;
+  background:
+    radial-gradient(
+      rgba(200,200,200,0.4),
+      rgba(10,10,10,0.0)
+    );
+    p2{
+	color:white;
+	font-size:17px;
+	line-height:1.428;
+	margin-bottom:10px;
+  background:
+    radial-gradient(
+      rgba(200,200,200,1),
+      rgba(10,10,10,0.0)
+    );
+}
+</style>
+</h>
+<p></p>
+</section>
+{% endblock %}
+
+{% block body_base %}
+<div1 class="container-fluid">
+    <body>
+        <h1> Your Feed </h1>
+        <p class=lead> Click any to view in detail </p>
+				{% for thot in thots %}
+				{% if thot.Category = 'T' %}
+				{% url "post_detail" thot.pk as detail %}
+ 				<table style="width:100%">
+  				<tr>
+			   	 <td>{{ thot.creation_date }}</td>
+			   	 <td><h1> <a href="{{detail}}"class="btn btn-custom"}><p2 class='lead'>{{ thot.content }}</p2></a> </h1></td> 
+			   	 {% if not thot.anon %}
+			   	 <td> Posted by {{ thot.user }}</a></td> 
+			   	 {% else %}
+			   	 <td> Anonymous Post</a></td>
+			   	 {% endif %}
+			   	 {% endif %}
+			  		</tr>
+					</table>
+					{% endfor %}
+					<p>Find Other Users! <a href="{% url 'tosearch' %}"><i class="fa fa-users"></i> {% trans "Search Users" %}</a></p>
+    			
+		</div>
+	</body>
+{% endblock %}
+<body>

@@ -1,0 +1,34 @@
+{% extends "theme_bootstrap/base.html" %}
+{% block extra_head %}
+<link rel="stylesheet" href="{{STATIC_URL}}css/site-c179c6a5f4.css">
+{% endblock %}
+{% load staticfiles %}
+{% load pinax_webanalytics_tags %}
+{% load i18n %}
+{% block content %}
+{% endblock %}
+{% block sidebar %}
+{% block styles %}
+<ul class="subnavilist">
+    <li><a href="{% url 'messages_inbox' %} ">&raquo;&nbsp;{% trans "Inbox" %}</a></li>
+    <li><a href="{% url 'messages_outbox' %} ">&raquo;&nbsp;{% trans "Sent Messages" %}</a></li>
+    <li><a href="{% url 'messages_compose' %} ">&raquo;&nbsp;{% trans "New Message" %}</a></li>
+    <li><a href="{% url 'messages_trash' %} ">&raquo;&nbsp;{% trans "Trash" %}</a></li>
+</ul>
+    {% include "_styles.html" %}
+{% endblock %}
+
+{% block footer %}
+    {% include "_footer.html" %}
+{% endblock %}
+
+
+{% block scripts %}
+    {% include "_scripts.html" %}
+{% endblock %}
+
+{% block extra_body_base %}
+    {% analytics %}
+    {% block extra_body %}{% endblock %}
+{% endblock %}
+{% endblock %}

@@ -1,0 +1,159 @@
+{% extends 'site_base.html' %}
+{% load i18n %}
+{% block thought %}	
+{% load bootstrap %}
+{% load imagekit %}
+{% load i18n %}
+{% block scripts %}
+    {% include "_scripts.html" %}
+{% endblock %}
+
+
+{% load staticfiles %}
+
+{% load pinax_webanalytics_tags %}
+
+
+{% block body_base %}
+{% block extra_head %}
+<link rel="stylesheet" href="{{STATIC_URL}}/css/site-c179c6a5f4.css">
+<head>
+<style>
+*/
+button.likes {
+  padding: 0;
+}
+
+.heart-particle-box {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  left: 30%;
+}
+
+#heart-icon {
+  margin-top: 150px;
+  color: #f55567;
+  font-size: 16px;
+  border: 1px;
+  opacity: 1;
+  background: none;
+  transition: .3s ease-in-out;
+}
+
+#heart-icon:hover {
+  border: 1px;
+  background: none;
+  cursor: pointer;
+  transition: .5s ease-in-out;
+}
+
+#heart-icon:focus {
+  outline: 0;
+  border: 1px;
+}
+
+#heart-counter {
+  font-weight: 700;
+  font-size: 0.8em;
+  opacity: 1;
+  font-size: 13px;
+  color: #f55567;
+}
+
+.heart-particle {
+  padding: 26px;
+  opacity: 1;
+  position: absolute;
+  display: none;
+}
+
+.heart-particle i {
+  position: absolute;
+  margin-left: 52px;
+  opacity: .4;
+  font-size: 16px;
+}
+
+.heart-particle-col {
+  color: #f55567;
+}
+
+/* Animations */
+
+@keyframes flows {
+  0% {
+    opacity: 0;
+    bottom: 0%;
+    left: 10%;
+  }
+  40% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+    left: 0%;
+  }
+  60% {
+    opacity: 0.3;
+  }
+  80% {
+    bottom: 60%;
+  }
+  100% {
+    opacity: 0;
+    bottom: 80%;
+    left: 0%;
+  }
+}
+</style>
+</head>
+{% endblock %}
+
+        <div class="container">		
+        	{% if thots.creation_date %}
+            	<div class="date">
+            	    {{ thots.creation_date }}
+            	</div>
+        	{% endif %}
+      	  <h1>{{ thots.content }} </h1> 
+      	  
+      	  <img src = "http://{{ request.META.HTTP_HOST }}/site_media/media/{{ thots.image }}"> 
+
+      	</div>
+      	
+      	<div class="heart-particle-box">
+      <button class="likes project-likes" id="heart-icon" data-post-id="{{ post.id }}" data-project-id="{{project.id}}" name="{{ thots.pk }}">
+      <i class="heart-shaped fa fa-heart-o fa-4x" style="display: line-block" id='i1'></i>
+     <div class="like_count_blog" id="heart-counter">{{ thots.total_likes }}</div>
+    </button> 
+        </p>
+      </div>
+    </div>
+</div>
+
+<script>
+$('#heart-icon').click(function(){
+      $.ajax({
+               type: "POST",
+               url: "{% url 'like' %}",
+               data: {'pk': $(this).attr('name'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+               dataType: "json",
+               success: function(response) {
+                      /*alert(response.message);*/
+                      /*#alert('Likes count is now ' + response.likes_count);*/
+                      document.getElementById("heart-counter").innerHTML = response.likes_count;
+                      document.getElementById("i1").toggleClass = "heart-shaped fa fa-heart fa-2x";
+                      document.find('i').toggleClass("heart-shaped fa fa-heart fa-2x");
+                      
+                      
+                },
+                error: function(rs, e) {
+                       alert(rs.responseText);
+                }
+          });
+    })
+    
+</script>
+{% endblock %}
+{% endblock %}

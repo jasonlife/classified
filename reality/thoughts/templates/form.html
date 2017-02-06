@@ -1,0 +1,22 @@
+
+{% load bootstrap %}
+{% load i18n %}
+{% block scripts %}
+    {% include "_scripts.html" %}
+{% endblock %}
+
+
+{% load staticfiles %}
+
+{% load pinax_webanalytics_tags %}
+
+{% block styles %}
+    {% include "_styles.html" %}
+{% endblock %}
+
+<html>
+<body>
+<form method="POST" action={% url 'register' %} class="post-form" id="form1">{% csrf_token %}
+		{{ form }}
+		<button type="submit">Save</button>
+	</form>

@@ -1,0 +1,15 @@
+{% load i18n %}
+{% block extra_head %}
+<link rel="stylesheet" href="{{STATIC_URL}}/css/site-c179c6a5f4.css">
+{% endblock %}
+<p2>
+{% trans "&copy; 2016 &lt;Ragnarok Productions&gt;" %}
+</p2>
+
+{% if user.is_authenticated %}
+{% url "new_thought" as login_url %}
+{% url "account_signup" as signup_url %}
+<div class='container'>
+	<p2>You are logged in, {{ user }}!  You can<a href="{{ login_url }}" class="btn btn-custom"><p2 class='lead'>Make a Bella</p2></a> or <a href="{% url 'thots' %}" class="btn btn-custom"><p2 class='lead'>View your bellafeed</p2></a> </p2>
+</div>
+{% endif %}

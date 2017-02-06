@@ -1,0 +1,60 @@
+{% load bootstrap %}
+{% load i18n %}
+{% load account_tags %}
+<html>
+	{% block extra_head %}
+	<link rel="stylesheet" href="{{STATIC_URL}}/css/site-c179c6a5f4.css">
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" media="all"/>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" type="text/javascript">
+	</script> <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	$(function() {
+	$("#new-user").autocomplete({
+	source: "/autocomplete/newuser/",
+	minLength: 1,
+	});
+	});
+	</script>
+	{% endblock %}
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<ul class="nav navbar-nav pull-right">
+    {% if request.user.is_authenticated %}
+        <li> 
+        	<a href="{% url 'tech' %}"><i class="fa fa-cloud" aria-hidden="true"></i>{% trans "Read" %}</a>
+        <li>
+        	<a href="{% url 'tosearch' %}"><i class="fa fa-users"></i> {% trans "Search Users" %}</a>
+        <li>
+            <a href="{% url 'account_settings' %}"><i class="fa fa-cog"></i> {% trans "Settings" %}</a>
+        </li> <!--
+        <li>
+    	<form method="post" action="{% url 'search' %}" class="navbar-form pull-right">
+    	{% csrf_token %}
+    	{{ form.username }}
+    	<button type="submit" class="btn btn-custom"><p1 class='lead'>Search</p></button>
+		</form>
+    	</li> -->
+    	<p class="navbar-text">
+            <i class="fa fa-user"></i> {% user_display request.user %}
+        </p>
+        <li>
+            <a id="account_logout" href="{% url 'account_logout' %}"><i class="fa fa-power-off"></i> {% trans "Log out" %}</a>
+        </li>
+    {% else %}
+        <li><a href="{% url 'account_login' %}">{% trans "Log in" %}</a></li>
+        {% if ACCOUNT_OPEN_SIGNUP %}
+            <li><a href="{% url 'account_signup' %}">{% trans "Sign up" %}</a></li>
+        {% endif %}
+    {% endif %}
+</ul>
+
+<form id="accountLogOutForm" style="display: none;" action="{% url 'account_logout' %}" method="POST">
+    {% csrf_token %}
+</form>
+{% block footer %}
+<script type="text/javascript" src="/static/collected/admin/js/vendor/jquery/jquery.js"></script>
+
+{{ form.media }}
+{% endblock %}
+</html>
